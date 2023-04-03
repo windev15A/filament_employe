@@ -3,10 +3,13 @@
 namespace App\Filament\Resources\StateResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -20,9 +23,10 @@ class CitiesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+
             ]);
     }
 
@@ -30,7 +34,10 @@ class CitiesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                TextColumn::make('id')->sortable(),
+                TextColumn::make('state.name')->sortable(),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('created_at')->dateTime()
             ])
             ->filters([
                 //
@@ -45,5 +52,5 @@ class CitiesRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

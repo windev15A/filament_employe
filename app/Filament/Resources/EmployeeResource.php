@@ -71,7 +71,6 @@ class EmployeeResource extends Resource
                                 return $state->cities->pluck('name', 'id');
                             })
                             ->reactive(),
-//                            ->afterStateUpdated(fn(callable $set) => $set('state_id', null)),
                         Select::make('department_id')
                             ->relationship('department', 'name')->required()
                     ])
